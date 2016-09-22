@@ -62,10 +62,11 @@ int main() {
     for (int i=0;i< m;i++) {
         scanf("%d %d %d", &u, &v, &w);      
         adj[u].push_back(pair<int, int>(w, v));
+        adj[v].push_back(pair<int, int>(w, u));
         
     }
     
-    int aux = dijkstra(0, 4);
+    int aux = dijkstra(5, 9);
     
     printf ("%d", aux);
    

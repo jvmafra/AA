@@ -37,42 +37,59 @@ void connect(int i, int j){
 
 
 int main() {
+	int cont = 0;
     int n, u, v, m, p;
 	Aresta atual;
 	Aresta aux;
 	vector<Aresta> arestas;
 	vector<Aresta> arvore;
     
-    scanf("%d %d", &n, &m);
+    while (1){
+		scanf("%d %d", &n, &m);
+		
+		if (n == 0 && m == 0) break;
+		
+		cont++;
+		
+		arestas.clear();
+		arvore.clear();
     
-    for (int i = 1; i <= n; i++) {
-    	uni[i] = i;
+		for (int i = 1; i <= n; i++) {
+			uni[i] = i;
+		}
+		
+		for (int i=0;i < m;i++) {
+			scanf("%d %d %d", &u, &v, &p);
+			if (u < v){
+				atual.v1 = u;
+				atual.v2 = v;
+			} else {
+				atual.v1 = v;
+				atual.v2 = u;
+			}
+			atual.peso = p;
+			arestas.push_back(atual);
+		}
+		
+		std::sort(arestas.begin(), arestas.end());
+		
+		
+		
+		printf("Teste %d\n", cont);
+		
+		for (int i = 0; i < arestas.size() ; i++){
+			aux = arestas[i];
+			if (!isConnected(aux.v1, aux.v2)){
+				arvore.push_back(aux);
+				connect(aux.v1, aux.v2);
+				printf("%d %d\n", aux.v1, aux.v2);
+			} 
+		}
+		printf("\n");
+		
+		
 	}
     
-    for (int i=0;i < m;i++) {
-        scanf("%d %d %d", &u, &v, &p);
-        atual.v1 = u;
-        atual.v2 = v;
-        atual.peso = p;
-        arestas.push_back(atual);
-    }
-    
-    std::sort(arestas.begin(), arestas.end());
-    
-    
-    
-    for (int i = 0; i < arestas.size() ; i++){
-		aux = arestas[i];
-		if (!isConnected(aux.v1, aux.v2)){
-			arvore.push_back(aux);
-			connect(aux.v1, aux.v2);
-		} 
-	}
-	
-	for (int i = 0; i < arvore.size(); i++){
-		 printf("%d - %d - %d\n", arvore[i].v1, arvore[i].v2, arvore[i].peso);
-	
-	}
     	
    
    

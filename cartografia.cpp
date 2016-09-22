@@ -18,8 +18,9 @@ void zeraDists(int n){
     }	
 }
  
-int BFS(int vertice){
-	int maior = 0;
+pair<int,int> BFS(int vertice){
+	int maiorDist = 0;
+	int verticeMaiorDist;
     queue<int> fila;
     fila.push(vertice);
     dist[vertice] = 0;
@@ -32,23 +33,22 @@ int BFS(int vertice){
         	int vizinho = adj[atual][i];
 	        if (dist[vizinho] > dist[atual] + 1) {
 	        	dist[vizinho] = dist[atual] + 1;
-	        	if (dist[vizinho] > maior){
-					maior = dist[vizinho];
+	        	if (dist[vizinho] > maiorDist){
+					maiorDist = dist[vizinho];
+					verticeMaiorDist = vizinho;
+					
 				}
 	        	fila.push(vizinho);
 	        }
     	} 
     }
     
-    return maior;
+    return pair<int, int> (maiorDist, verticeMaiorDist);
  
 }
 
 int main(){
 	int n, u, v;
-	
-	int aux;
-	int max = 0;
 	
     scanf("%d", &n);
  
@@ -58,16 +58,18 @@ int main(){
         adj[v].push_back(u);
  
     }
+    
+    zeraDists(n);
 		
-    for (int i = 1; i <= n; i++) {
-		zeraDists(n);
-    	aux = BFS(i);
-    	
-    	if (aux > max) {
-			max = aux;
-		}
-    }
-    printf("%d", max);
+    pair<int, int> firstBFS = BFS(1);
+    
+    int new_vertice = firstBFS.second;
+    
+    zeraDists(n);
+    
+    pair<int, int> SecBFS = BFS(new_vertice);
+    
+    printf("%d", SecBFS.first);
     
     return 0;
 }
